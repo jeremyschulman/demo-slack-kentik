@@ -1,0 +1,6 @@
+fastapi
+aiohttp
+uvicorn
+slack_bolt
+slack-click
+tenacity

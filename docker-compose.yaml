@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  kentik-fotomat:
+    image: "kentik-fotomat:latest"
+    environment:
+      KT_AUTH_EMAIL: ${KT_AUTH_EMAIL}
+      KT_AUTH_TOKEN: ${KT_AUTH_TOKEN}
+      DEFAULT_TTL: 86400                        # cache timeout 1 day
+      CACHE_PATH: /var/tmp/image-cache
+    volumes:
+       - image-cache:/var/tmp/image-cache
+    ports:
+      # host-port:container-port
+      - ${KENTIK_FOTOMAT_PORT}:80
+
+volumes:
+  image-cache:

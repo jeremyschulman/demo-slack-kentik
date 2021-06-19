@@ -23,29 +23,28 @@ from slack_sdk.models.blocks import (
 
 from slack_sdk.web.async_slack_response import AsyncSlackResponse
 from slack_bolt.request.async_request import AsyncBoltRequest
+from slack_bolt.context.say.async_say import AsyncSay
 
 # -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
-from ..app_data import app
-from .slack_commands import cli_cloud_app
-from ..kentik_queries import kt_find_blocked_apps
+from fotomat import fotomat
+from fotomat.app_data import app
+from fotomat.cli.root import cli_cloud_app
+from fotomat.kentik_queries import kt_find_blocked_apps, blocked_app_chart_payload
 
 
 class AutoSlackIDs(str, Enum):
     def _generate_next_value_(name, start, count, last_values):
         return last_values[0] + name
 
-    def __str__(self):
+    def __repr__(self):
         return self.value
-
-    __repr__ = __str__
 
 
 class _EventIDs(AutoSlackIDs):
     base = cli_cloud_app.event_id + ".blocked."
-
     view_id = auto()
     selectapp_id = auto()
 
@@ -76,7 +75,7 @@ async def cli_cloud_app_blocked_cmd(request: AsyncBoltRequest):
         SectionBlock(
             text=MText(
                 text=(
-                    "Finding cloud applications that are being blocked by a firewall.\n"
+                    "Finding cloud applications that are being blocked by a firewall.\n\n"
                     f"{_BE_PATIENT_}"
                 )
             )
@@ -126,18 +125,19 @@ async def fetch_blocked_apps_from_kentik(
 
 
 @app.view_submission(_EventIDs.view_id)
-async def on_execute(ack, view: dict):
+async def on_execute(context, say: AsyncSay, ack, view: dict):
+    await ack()
 
     _id = _EventIDs.selectapp_id
     app_name = view["state"]["values"][_id][_id]["selected_option"]["value"]
 
-    new_view = View(type="modal", title="Getting Chart", private_metadata=app_name)
+    say.channel = context.user_id
 
-    new_view.blocks = [
-        SectionBlock(
-            text=f"Retrieving chart image.\n{_BE_PATIENT_}\n",
-            fields=[MText(text=f"*name*:\n{app_name}")],
-        )
-    ]
+    res = await say(
+        f"Retrieving chart image.\n" f"*Name*: {app_name}\n\n" f"{_BE_PATIENT_}\n"
+    )
 
-    await ack({"response_action": "update", "view": new_view.to_dict()})
+    # now go fetch the image from the fotomat.
+    payload = blocked_app_chart_payload(app_name=app_name)
+    thread_ts = res["ts"]
+    await fotomat.request_foto(say=say, thread_ts=thread_ts, payload=payload)

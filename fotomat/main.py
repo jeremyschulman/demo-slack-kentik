@@ -6,14 +6,13 @@ import sys
 from os import environ
 
 from slack_bolt.adapter.socket_mode.async_handler import AsyncSocketModeHandler
+
 # -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
 from .app_data import app, api
-
-# noinspection PyUnresolvedReferences
-from . import cli
+from . import cli  # noqa
 
 # -----------------------------------------------------------------------------
 #
@@ -31,4 +30,3 @@ async def demo_startup():
 
     # start the websocket handler to consume messages from Slack
     await AsyncSocketModeHandler(app).start_async()
-

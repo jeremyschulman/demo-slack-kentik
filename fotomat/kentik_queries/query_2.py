@@ -11,7 +11,7 @@ payload = {
                     "aggregateTypes": [
                         "avg_bits_per_sec",
                         "p95th_bits_per_sec",
-                        "max_bits_per_sec"
+                        "max_bits_per_sec",
                     ],
                     "aggregateThresholds": {},
                     "bracketOptions": "",
@@ -48,9 +48,7 @@ payload = {
                     "generatorQueryTitle": "{{generator_series_name}}",
                     "generatorTopx": 8,
                     "matrixBy": [],
-                    "metric": [
-                        "bytes"
-                    ],
+                    "metric": ["bytes"],
                     "forceMinsPolling": False,
                     "mirror": False,
                     "mirrorUnits": True,
@@ -85,7 +83,7 @@ payload = {
                             "origLabel": "Average",
                             "sample_rate": 1,
                             "raw": True,
-                            "name": "avg_bits_per_sec"
+                            "name": "avg_bits_per_sec",
                         },
                         {
                             "value": "p95th_bits_per_sec",
@@ -97,7 +95,7 @@ payload = {
                             "group": "Bits/s Sampled at Ingress + Egress",
                             "origLabel": "95th Percentile",
                             "sample_rate": 1,
-                            "name": "p95th_bits_per_sec"
+                            "name": "p95th_bits_per_sec",
                         },
                         {
                             "value": "max_bits_per_sec",
@@ -108,8 +106,8 @@ payload = {
                             "group": "Bits/s Sampled at Ingress + Egress",
                             "origLabel": "Max",
                             "sample_rate": 1,
-                            "name": "max_bits_per_sec"
-                        }
+                            "name": "max_bits_per_sec",
+                        },
                     ],
                     "filters": {
                         "connector": "All",
@@ -124,23 +122,23 @@ payload = {
                                     {
                                         "filterField": "inet_src_addr",
                                         "operator": "ILIKE",
-                                        "filterValue": "example_IP_address/32"
+                                        "filterValue": "example_IP_address/32",
                                     }
                                 ],
                                 "saved_filters": [],
-                                "filterGroups": []
+                                "filterGroups": [],
                             }
-                        ]
+                        ],
                     },
                     "dimension": [
                         "i_device_site_name",
                         "InterfaceID_src",
                         "IP_src",
                         "IP_dst",
-                        "InterfaceID_dst"
-                    ]
-                }
+                        "InterfaceID_dst",
+                    ],
+                },
             }
-        ]
+        ],
     }
 }

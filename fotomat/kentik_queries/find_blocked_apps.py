@@ -14,7 +14,7 @@ from ..kentik import KentikClient
 # Exports
 # -----------------------------------------------------------------------------
 
-__all__ = ['kt_find_blocked_apps']
+__all__ = ["kt_find_blocked_apps"]
 
 
 # -----------------------------------------------------------------------------
@@ -23,14 +23,15 @@ __all__ = ['kt_find_blocked_apps']
 #
 # -----------------------------------------------------------------------------
 
+
 async def kt_find_blocked_apps() -> List[str]:
     kt: KentikClient
 
     async with KentikClient() as kt:
         res = await kt.fetch_chart_data(api_payload)
 
-    body = res['results'][0]['data']
-    app_names = [rec['kt_aws_src_vm_name'] for rec in body]
+    body = res["results"][0]["data"]
+    app_names = [rec["kt_aws_src_vm_name"] for rec in body]
     return app_names
 
 
@@ -44,12 +45,12 @@ api_payload = {
                 "aggregateTypes": [
                     "avg_bits_per_sec",
                     "p95th_bits_per_sec",
-                    "max_bits_per_sec"
+                    "max_bits_per_sec",
                 ],
                 "aggregateThresholds": {
                     "avg_bits_per_sec": 0,
                     "p95th_bits_per_sec": 0,
-                    "max_bits_per_sec": 0
+                    "max_bits_per_sec": 0,
                 },
                 "bracketOptions": "",
                 "hideCidr": False,
@@ -64,9 +65,7 @@ api_payload = {
                 "device_name": [],
                 "device_labels": [],
                 "device_sites": [],
-                "device_types": [
-                    "aws_subnet"
-                ],
+                "device_types": ["aws_subnet"],
                 "fastData": "Auto",
                 "filterDimensionsEnabled": False,
                 "filterDimensionName": "Total",
@@ -87,9 +86,7 @@ api_payload = {
                 "generatorQueryTitle": "{{generator_series_name}}",
                 "generatorTopx": 8,
                 "matrixBy": [],
-                "metric": [
-                    "bytes"
-                ],
+                "metric": ["bytes"],
                 "forceMinsPolling": False,
                 "mirror": False,
                 "mirrorUnits": True,
@@ -124,7 +121,7 @@ api_payload = {
                         "origLabel": "Average",
                         "sample_rate": 1,
                         "raw": True,
-                        "name": "avg_bits_per_sec"
+                        "name": "avg_bits_per_sec",
                     },
                     {
                         "value": "p95th_bits_per_sec",
@@ -136,7 +133,7 @@ api_payload = {
                         "group": "Bits/s Sampled at Ingress + Egress",
                         "origLabel": "95th Percentile",
                         "sample_rate": 1,
-                        "name": "p95th_bits_per_sec"
+                        "name": "p95th_bits_per_sec",
                     },
                     {
                         "value": "max_bits_per_sec",
@@ -147,8 +144,8 @@ api_payload = {
                         "group": "Bits/s Sampled at Ingress + Egress",
                         "origLabel": "Max",
                         "sample_rate": 1,
-                        "name": "max_bits_per_sec"
-                    }
+                        "name": "max_bits_per_sec",
+                    },
                 ],
                 "filters": {
                     "connector": "All",
@@ -163,23 +160,21 @@ api_payload = {
                                 {
                                     "filterField": "kt_aws_action",
                                     "operator": "=",
-                                    "filterValue": "REJECT"
+                                    "filterValue": "REJECT",
                                 },
                                 {
                                     "filterField": "kt_aws_src_vm_name",
                                     "operator": "<>",
-                                    "filterValue": ""
-                                }
+                                    "filterValue": "",
+                                },
                             ],
                             "saved_filters": [],
-                            "filterGroups": []
+                            "filterGroups": [],
                         }
-                    ]
+                    ],
                 },
-                "dimension": [
-                    "kt_aws_src_vm_name"
-                ]
-            }
+                "dimension": ["kt_aws_src_vm_name"],
+            },
         }
     ]
 }

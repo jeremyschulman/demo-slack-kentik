@@ -1,33 +1,19 @@
 # -----------------------------------------------------------------------------
-# System Imports
-# -----------------------------------------------------------------------------
-
-import asyncio
-
-# -----------------------------------------------------------------------------
 # Public Imports
 # -----------------------------------------------------------------------------
-
 
 import click
 
 from slack_bolt.request.async_request import AsyncBoltRequest
 from slack_click.async_click import AsyncSlackClickGroup, version_option, click_async
 
-from httpx import AsyncClient, Response
-from slack_sdk.models.blocks import ImageBlock, PlainTextObject
-from tenacity import retry, wait_exponential
-
 # -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
-from .. app_data import app
+from fotomat.app_data import app
 
-# The Kentik Fotomat URL is routing through ngrok since I am using this on my
-# laptop for dev-testing. YMMV.
-
-FOTOMAT_URL = 'https://fotomat.ngrok.io'
+FOTOMAT_URL = "https://fotomat.ngrok.io"
 
 
 # -----------------------------------------------------------------------------
@@ -35,6 +21,7 @@ FOTOMAT_URL = 'https://fotomat.ngrok.io'
 #                Register the '/cloud' command with Click + Slacks
 #
 # -----------------------------------------------------------------------------
+
 
 @click.group(name="/cloud", cls=AsyncSlackClickGroup)
 @version_option(version="0.1.0")
@@ -52,6 +39,7 @@ async def on_cli_slash_cloud(request: AsyncBoltRequest, ack):
     await ack()
     return await cli_slash_cloud(prog_name=cli_slash_cloud.name, obj=request)
 
+
 # -----------------------------------------------------------------------------
 #
 #                            /cloud app blocked?
@@ -59,7 +47,7 @@ async def on_cli_slash_cloud(request: AsyncBoltRequest, ack):
 # -----------------------------------------------------------------------------
 
 
-@cli_slash_cloud.group(name='app')
+@cli_slash_cloud.group(name="app")
 async def cli_cloud_app():
     """
     Cloud application commands

@@ -49,7 +49,7 @@ configurable; perhaps in time, but for now you need to make the following code
 changes.
 
 1. You need to change the `FOTOMAT_URL` value in the
-[command_fotomat.py](fotomat/command_fotomat.py) file.  This value must be the
+[command_fotomat.py](fotomat/slack_commands.py) file.  This value must be the
 value that is reachable via the Slack Platform; meaning it must be publically
 reachable.  The current value is `https://fotomat.ngrok.io` as I am using ngrok
 for dev-testing forwarding. You **CANNOT** use the same value.

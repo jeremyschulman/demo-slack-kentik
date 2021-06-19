@@ -5,12 +5,15 @@
 import sys
 from os import environ
 
+from slack_bolt.adapter.socket_mode.async_handler import AsyncSocketModeHandler
 # -----------------------------------------------------------------------------
 # Private Imports
 # -----------------------------------------------------------------------------
 
-from .app_data import api, slack_socket_handler  # noqa
-from . import command_fotomat  # noqa
+from .app_data import app, api
+
+# noinspection PyUnresolvedReferences
+from . import cli
 
 # -----------------------------------------------------------------------------
 #
@@ -18,7 +21,7 @@ from . import command_fotomat  # noqa
 #
 # -----------------------------------------------------------------------------
 
-ENV_VARS = ["SLACK_SIGNING_SECRET", "SLACK_APP_TOKEN", "SLACK_APP_PORT"]
+ENV_VARS = ["SLACK_BOT_TOKEN", "SLACK_APP_TOKEN", "SLACK_APP_PORT"]
 
 
 @api.on_event("startup")
@@ -27,4 +30,5 @@ async def demo_startup():
         sys.exit(f"Missing required environment variables: {missing}")
 
     # start the websocket handler to consume messages from Slack
-    await slack_socket_handler.start_async()
+    await AsyncSocketModeHandler(app).start_async()
+

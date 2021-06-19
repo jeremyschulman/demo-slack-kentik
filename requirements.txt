@@ -1,6 +1,7 @@
 fastapi
 aiohttp
 uvicorn
+httpx
 slack_bolt
 slack-click
 tenacity

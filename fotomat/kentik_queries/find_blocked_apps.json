@@ -1,7 +1,7 @@
 {
   "queries": [
     {
-      "bucket": "Horizons",
+      "bucket": "Table",
       "isOverlay": false,
       "query": {
         "all_devices": false,
@@ -23,7 +23,7 @@
         "cutFn": {},
         "cutFnRegex": {},
         "cutFnSelector": {},
-        "depth": 75,
+        "depth": 20,
         "descriptor": "",
         "device_name": [],
         "device_labels": [],
@@ -42,7 +42,7 @@
         "aggregateFilters": [],
         "hostname_lookup": false,
         "isOverlay": false,
-        "lookback_seconds": 86400,
+        "lookback_seconds": 3600,
         "from_to_lookback": 3600,
         "generatorDimensions": [],
         "generatorPanelMinHeight": 250,
@@ -72,11 +72,11 @@
         "sync_axes": false,
         "sync_extents": true,
         "show_site_markers": false,
-        "topx": 8,
+        "topx": 100,
         "update_frequency": 0,
         "use_log_axis": false,
         "use_secondary_log_axis": false,
-        "viz_type": "horizon",
+        "viz_type": "table",
         "aggregates": [
           {
             "value": "avg_bits_per_sec",
@@ -122,12 +122,17 @@
               "named": false,
               "connector": "All",
               "not": false,
-              "autoAdded": true,
+              "autoAdded": "",
               "filters": [
                 {
-                  "filterField": "kt_aws_src_vm_name",
+                  "filterField": "kt_aws_action",
                   "operator": "=",
-                  "filterValue": "*** TBD ***"
+                  "filterValue": "REJECT"
+                },
+                {
+                  "filterField": "kt_aws_src_vm_name",
+                  "operator": "<>",
+                  "filterValue": ""
                 }
               ],
               "saved_filters": [],
@@ -136,9 +141,7 @@
           ]
         },
         "dimension": [
-          "kt_aws_src_vm_name",
-          "kt_aws_action",
-          "dst_proto_port"
+          "kt_aws_src_vm_name"
         ]
       }
     }

@@ -1,7 +1,7 @@
 {
   "queries": [
     {
-      "bucket": "Horizons",
+      "bucket": "Table",
       "isOverlay": false,
       "query": {
         "all_devices": false,
@@ -23,7 +23,7 @@
         "cutFn": {},
         "cutFnRegex": {},
         "cutFnSelector": {},
-        "depth": 75,
+        "depth": 10,
         "descriptor": "",
         "device_name": [],
         "device_labels": [],
@@ -48,7 +48,7 @@
         "generatorPanelMinHeight": 250,
         "generatorMode": false,
         "generatorColumns": 1,
-        "generatorQueryTitle": "{{generator_series_name}}",
+        "generatorQueryTitle": "*** TBD ***",
         "generatorTopx": 8,
         "matrixBy": [],
         "metric": [
@@ -60,7 +60,7 @@
         "outsort": "avg_bits_per_sec",
         "overlay_day": -7,
         "overlay_timestamp_adjust": false,
-        "query_title": "",
+        "query_title": "*** TBD ***",
         "secondaryOutsort": "",
         "secondaryTopxSeparate": false,
         "secondaryTopxMirrored": false,
@@ -72,11 +72,11 @@
         "sync_axes": false,
         "sync_extents": true,
         "show_site_markers": false,
-        "topx": 8,
+        "topx": 10,
         "update_frequency": 0,
         "use_log_axis": false,
         "use_secondary_log_axis": false,
-        "viz_type": "horizon",
+        "viz_type": "table",
         "aggregates": [
           {
             "value": "avg_bits_per_sec",

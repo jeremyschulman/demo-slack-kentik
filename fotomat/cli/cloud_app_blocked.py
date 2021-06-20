@@ -31,8 +31,8 @@ from slack_bolt.context.say.async_say import AsyncSay
 
 from fotomat import fotomat
 from fotomat.app_data import app
-from fotomat.cli.root import cli_cloud_app
-from fotomat.kentik_queries import kt_find_blocked_apps, blocked_app_chart_payload
+from fotomat.cli.cloud import cli_cloud_app
+from fotomat import kentik_queries
 
 
 class AutoSlackIDs(str, Enum):
@@ -97,7 +97,7 @@ async def fetch_blocked_apps_from_kentik(
     orig_view = res.data["view"]
     view_id = orig_view["id"]
 
-    app_names = await kt_find_blocked_apps()
+    app_names = await kentik_queries.kt_find_blocked_apps()
     if not app_names:
         # TODO: show that no apps are being blocked at this time
         pass
@@ -137,7 +137,16 @@ async def on_execute(context, say: AsyncSay, ack, view: dict):
         f"Retrieving chart image.\n" f"*Name*: {app_name}\n\n" f"{_BE_PATIENT_}\n"
     )
 
-    # now go fetch the image from the fotomat.
-    payload = blocked_app_chart_payload(app_name=app_name)
     thread_ts = res["ts"]
-    await fotomat.request_foto(say=say, thread_ts=thread_ts, payload=payload)
+
+    # now go fetch the chart image from the fotomat.
+    payload = kentik_queries.blocked_app_chart_payload(app_name=app_name)
+    await fotomat.request_foto(
+        title=f"{app_name} traffic chart", say=say, thread_ts=thread_ts, payload=payload
+    )
+
+    # now go fetch the table image from the fotomat.
+    payload = kentik_queries.blocked_app_table_payload(app_name=app_name)
+    await fotomat.request_foto(
+        title=f"{app_name} traffic table", say=say, thread_ts=thread_ts, payload=payload
+    )

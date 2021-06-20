@@ -8,7 +8,7 @@ from slack_sdk.models.blocks import ImageBlock, PlainTextObject
 FOTOMAT_URL = "https://fotomat.ngrok.io"
 
 
-async def request_foto(say, thread_ts, payload):
+async def request_foto(title: str, say, thread_ts, payload):
 
     foto_req = dict(api_query=dict(imageType="png", ttl=3600, **payload))
 
@@ -17,14 +17,14 @@ async def request_foto(say, thread_ts, payload):
         fm_body = fm_res.json()
         fm_id = fm_body["id"]
 
-    await say(f"Fotomat pickup ID is: `{fm_id}`", thread_ts=thread_ts)
+    await say(f"Requesting {title} image ... ", thread_ts=thread_ts)
+
+    # await say(f"Fotomat pickup ID is: `{fm_id}`", thread_ts=thread_ts)
     asyncio.create_task(pickup_foto(say, thread_ts, image_id=fm_id))
 
 
 async def pickup_foto(say, thread_ts, image_id):
     image_url = f"/image/{image_id}"
-
-    await say("Waiting for image ... ", thread_ts=thread_ts)
 
     async with AsyncClient(base_url=FOTOMAT_URL) as f_api:
 

@@ -18,7 +18,7 @@ You can find a short demo video on YouTube [here](https://youtu.be/oqmKLYzG9MU).
 You will need to build the Kentik Image Cache docker container image, as
 described in that project
 [README](https://github.com/kentik/kentik_image_cache/blob/master/README.md)
-file.  When you build the image set the tag name to **kentik-fotomat**. 
+file.  When you build the image set the tag name to **kentik-fotomat**.
 Alternatively you can change the image name in the
 [docker-compose.yaml](docker-compose.yaml) file.  The compose file defines a
 few environment variables that you need to export, or you can change this file
@@ -49,12 +49,12 @@ configurable; perhaps in time, but for now you need to make the following code
 changes.
 
 1. You need to change the `FOTOMAT_URL` value in the
-[command_fotomat.py](fotomat/command_fotomat.py) file.  This value must be the
+[command_fotomat.py](fotomat/slack_commands.py) file.  This value must be the
 value that is reachable via the Slack Platform; meaning it must be publically
 reachable.  The current value is `https://fotomat.ngrok.io` as I am using ngrok
 for dev-testing forwarding. You **CANNOT** use the same value.
 
 2.  The demo commands in the `command_format.py` are bound to specific Kentik
-data explorer queries; specific to your Kentik portal.  You cannot use these. 
+data explorer queries; specific to your Kentik portal.  You cannot use these.
 But you can see how the demo app is using them.  You will need to substitute
 your own.
